@@ -3,13 +3,13 @@ import { PedidoVentaDetalle } from "./PedidoVentaDetalle";
 
 export class PedidoVenta {
   id: number;
-  cliente: Cliente; // Relación bidireccional con Cliente
+  cliente: Cliente;
   fechaPedido: Date;
   nroComprobante: number;
   formaPago: string;
   observaciones?: string;
   totalPedido: number;
-  detalles: PedidoVentaDetalle[]; // Relación bidireccional con PedidoVentaDetalle
+  detalles: PedidoVentaDetalle[];
 
   constructor(
     id: number,
@@ -18,7 +18,7 @@ export class PedidoVenta {
     nroComprobante: number,
     formaPago: string,
     totalPedido: number,
-    detalles: PedidoVentaDetalle[],
+    detalles: PedidoVentaDetalle[], // Asegúrate de que esto sea un arreglo de detalles
     observaciones?: string
   ) {
     this.id = id;
@@ -31,10 +31,8 @@ export class PedidoVenta {
     this.observaciones = observaciones;
   }
 
-  asignarCliente(cliente: Cliente): void {
-    this.cliente = cliente;
-    if (!cliente.pedidoVenta.includes(this)) {
-      cliente.agregarPedido(this); // Sincronizar la relación bidireccional
-    }
+  agregarDetalle(detalle: PedidoVentaDetalle): void {
+    this.detalles.push(detalle);
+    detalle.pedidoVenta = this; // Sincronizar relación bidireccional
   }
 }
